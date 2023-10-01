@@ -5,81 +5,79 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import com.example.appli.configuration.CustomProperties;
-import com.example.appli.model.Joueur;
+import com.example.appli.model.Jeu;
 
+
+import org.springframework.stereotype.Component;
 @Component
-public class JoueurRepository {
-    // recupere lurl de l'api avec une injection de dependance
-    @Autowired
+public class JeuRepository {
+    
+     @Autowired
     CustomProperties properties;
     String baseUrlApi;
-
-    // en utilisant le constructeur le autowired ne sert a rien
-    public JoueurRepository(CustomProperties customProperties) {
+    
+    public JeuRepository(CustomProperties customProperties){
         properties = customProperties;
         baseUrlApi = properties.getApiURL();
     }
-
-    public Iterable<Joueur> getAllJoueurs() {
+      public Iterable<Jeu> getAllJeux() {
         // String baseUrlApi = properties.getApiURL();
-        String getPlayerUrl = baseUrlApi + "/players";
+        String getGameUrl = baseUrlApi + "/games";
 
         /*
          * L'obj de la class RestTemplate fait des requetes http et convertit le JSON
          * retourné par la requete en ob JAVA
          */
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Iterable<Joueur>> response = restTemplate.exchange(
-                getPlayerUrl,
+        ResponseEntity<Iterable<Jeu>> response = restTemplate.exchange(
+                getGameUrl,
                 HttpMethod.GET,
                 null,
                 // type de la response ParameterizedTypeReference
-                new ParameterizedTypeReference<Iterable<Joueur>>() {
+                new ParameterizedTypeReference<Iterable<Jeu>>() {
                 });
         return response.getBody();
 
     }
-
-    public Joueur getJoueurById(long id) {
+    public Jeu getJeuById(long id) {
         // String baseUrlApi = properties.getApiURL();
-        String getPlayerUrl = baseUrlApi + "/player/" + id;
+        String getGameUrl = baseUrlApi + "/game/" +id;
         RestTemplate restTemplate = new RestTemplate();
-        // retourn un joueur
-        ResponseEntity<Joueur> response = restTemplate.exchange(
-                // url appelé
-                getPlayerUrl,
-                HttpMethod.GET,
-                null,
-                // cmt on va le recevoir un obj de la class joueur
-                Joueur.class
+        // retourn un jeu
+        ResponseEntity<Jeu> response = restTemplate.exchange(
+            // url appelé
+            getGameUrl,
+            HttpMethod.GET,
+            null,
+            // cmt on va le recevoir un obj de la class joueur
+             Jeu.class
+   
 
         );
         return response.getBody();
 
-    }
-
-    public Joueur addJoueur(Joueur e) {
+     }
+     public Jeu addJeu(Jeu e) {
         RestTemplate restTemplate = new RestTemplate();
-        HttpEntity<Joueur> request = new HttpEntity<Joueur>(e);
-        ResponseEntity<Joueur> response = restTemplate.exchange(
-                baseUrlApi + "/player",
-                HttpMethod.POST,
-                request,
-                Joueur.class);
+        HttpEntity<Jeu> request = new HttpEntity<Jeu>(e);
+        ResponseEntity<Jeu> response = restTemplate.exchange(
+            baseUrlApi + "/game",
+            HttpMethod.POST,
+            request,
+            Jeu.class
+        );
         return response.getBody();
     }
-
-    public Boolean deleteJoueur(long id) {
-        String getPlayerUrl = baseUrlApi + "/player/" + id;
+    public Boolean deleteJeu(long id) {
+        String getGameUrl = baseUrlApi + "/game/" + id;
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Boolean> response = restTemplate.exchange(
 
                 // url appelé
-                getPlayerUrl,
+                getGameUrl,
                 // dans quelle methode
                 HttpMethod.DELETE,
                 // les données envoyé
@@ -90,18 +88,17 @@ public class JoueurRepository {
         );
         return response.getBody();
     }
-
-    public Joueur updateJoueur(long id, Joueur e) {
-        String getPlayerUrl = baseUrlApi + "/player/" + id;
+     public Jeu updateJeu(long id, Jeu e) {
+        String getGameUrl = baseUrlApi + "/game/" + id;
         RestTemplate restTemplate = new RestTemplate();
-        HttpEntity<Joueur> request = new HttpEntity<Joueur>(e);
-        ResponseEntity<Joueur> response = restTemplate.exchange(
+        HttpEntity<Jeu> request = new HttpEntity<Jeu>(e);
+        ResponseEntity<Jeu> response = restTemplate.exchange(
                 // url appelé
-                getPlayerUrl,
+                getGameUrl,
                 HttpMethod.PUT,
                 request,
                 
-                Joueur.class
+                Jeu.class
 
         );
         return response.getBody();
