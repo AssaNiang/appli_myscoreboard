@@ -31,19 +31,49 @@ public class JoueurController {
         model.addAttribute("joueur", j);
         return "joueur/fiche";
     }
+
     // pour afficher le formulaire
-     @GetMapping("/joueur/ajouter")
+    @GetMapping("/joueur/ajouter")
     public String ajouter(Model model) {
         Joueur joueur = new Joueur();
         model.addAttribute("joueur", joueur);
         return "joueur/form";
     }
-// Pour envoyer le formulaire
+
+    // Pour envoyer le formulaire
     @PostMapping("/joueur/ajouter")
-    public ModelAndView sauvegarder(@ModelAttribute Joueur joueur){
+    public ModelAndView sauvegarder(@ModelAttribute Joueur joueur) {
         joueurService.saveJoueur(joueur);
         return new ModelAndView("redirect:/joueurs");
     }
 
+    // pour confirmer les données av de supprimer le joueur
+    @GetMapping("joueur/{id}/supprimer")
+    public String confirmer(@PathVariable("id") Long id, Model model) {
+        Joueur joueur = joueurService.getJoueur(id);
+        model.addAttribute("joueur", joueur);
+        return "joueur/ficheConfirm";
+    }
+
+    // supprimer
+    @PostMapping("joueur/{id}/supprimer")
+    public ModelAndView supprimer(@PathVariable("id") Long id) {
+    joueurService.deleteJoueur(id);
+        return new ModelAndView("redirect:/joueurs");
+    }
+
+    // afficher le formulaire pour faire la modification
+    @GetMapping("/joueur/{id}/modifier")
+    public String modifierUnJoueur(@PathVariable("id") Long id, Model model){
+        Joueur joueur = joueurService.getJoueur(id);
+        model.addAttribute("joueur",joueur);
+        return "joueur/formUpdate";
+    }
+   // Pour valider la modification pour envoyer le form
+    @PostMapping("/joueur/{id}/modifier")
+    public ModelAndView ValidationUpdate(@ModelAttribute Joueur joueur) {
+        joueurService.saveJoueur(joueur);
+        return new ModelAndView("redirect:/joueurs");
+    }
 
 }

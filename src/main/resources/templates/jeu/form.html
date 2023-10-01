@@ -10,20 +10,22 @@
 
 </head>
 <body class="container">
-    <h1 class="alert alert-primary text-center">Formulaire</h1>
+    <h1 class="alert alert-primary text-center">Formulaire Jeu</h1>
 
     <!-- condition ternaire: si un id existe alors on modifie, sinon on crééer -->
-    <form th:if="${joueur.id}" method="post" th:action="${joueur.id} ? @{/joueur/{id}/modifier(id=${joueur.id})} : @{/joueur/ajouter} " th:object="${joueur}">
+    <form th:if="${jeu.id}" method="post" th:action="${jeu.id} ? @{/jeu/{id}/modifier(id=${jeu.id})} : @{/jeu/ajouter} " th:object="${jeu}">
+        <!-- <form  method="post" th:action="@=${/jeu/ajouter}" th:object="${jeu}"> -->
 
         <div class="form-group">
-            <label for="nickname">Pseudo</label>
-            <input type="text" th:field="{nickname}" id="nickname" class="form-control">
-        </div>
-        <div class="form-group">
-            <label for="email">E-mail</label>
-            <input type="text" th:field="{email}" id="email" class="form-control">
+            <label for="id">Identifiant</label>
+            <input type="text" th:field="id" id="id" class="form-control">
         </div>
 
+        <div class="form-group">
+            <label for="title">Titre</label>
+            <input type="text" th:field="title" id="title" class="form-control">
+        </div>
+       
         <div class="d-flex mt-3 justify-content-between">
             <button type="submit" class="btn btn-primary">
                 <i class="fa fa-save"></i> Créer
@@ -31,7 +33,7 @@
             <button type="reset" class="btn btn-warning">
                 <i class="fa fa-eraser"></i> Effacer
             </button>
-            <a th:href="@{/joueurs}" class="btn btn-danger">
+            <a th:href="@{/jeux}" class="btn btn-danger">
                 <i class="fa fa-reply"></i> Retour
             </a>
         </div>
