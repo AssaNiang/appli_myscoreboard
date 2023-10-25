@@ -12,16 +12,17 @@ import com.example.appli.configuration.CustomProperties;
 import com.example.appli.model.Joueur;
 
 @Component
-public class JoueurRepository {
+public class JoueurRepository extends Repository {
     // recupere lurl de l'api avec une injection de dependance
     @Autowired
-    CustomProperties properties;
-    String baseUrlApi;
+    // CustomProperties properties;
+    // String baseUrlApi;
 
     // en utilisant le constructeur le autowired ne sert a rien
     public JoueurRepository(CustomProperties customProperties) {
-        properties = customProperties;
-        baseUrlApi = properties.getApiURL();
+        // properties = customProperties;
+        // baseUrlApi = properties.getApiURL();
+        super(customProperties);
     }
 
     public Iterable<Joueur> getAllJoueurs() {
@@ -93,7 +94,9 @@ public class JoueurRepository {
 
     public Joueur updateJoueur(long id, Joueur e) {
         String getPlayerUrl = baseUrlApi + "/player/" + id;
+        // si id n'est pas dans le paramettre on pouvait faire e.getId() à la place de +id
         RestTemplate restTemplate = new RestTemplate();
+    //    renvoit tout un obj en creant le corps de la requette
         HttpEntity<Joueur> request = new HttpEntity<Joueur>(e);
         ResponseEntity<Joueur> response = restTemplate.exchange(
                 // url appelé

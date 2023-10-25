@@ -21,7 +21,7 @@ public class JoueurController {
     public String joueurs(Model model) {
         Iterable<Joueur> joueurs = joueurService.getJoueurs();
         model.addAttribute("joueurs", joueurs);
-        return "home";
+        return "joueur/liste";
     }
 
     @GetMapping("/joueur/{id}/fiche")
@@ -58,21 +58,30 @@ public class JoueurController {
     // supprimer
     @PostMapping("joueur/{id}/supprimer")
     public ModelAndView supprimer(@PathVariable("id") Long id) {
-    joueurService.deleteJoueur(id);
+        joueurService.deleteJoueur(id);
         return new ModelAndView("redirect:/joueurs");
     }
 
     // afficher le formulaire pour faire la modification
     @GetMapping("/joueur/{id}/modifier")
-    public String modifierUnJoueur(@PathVariable("id") Long id, Model model){
+    public String modifierUnJoueur(@PathVariable("id") Long id, Model model) {
         Joueur joueur = joueurService.getJoueur(id);
-        model.addAttribute("joueur",joueur);
-        return "joueur/formUpdate";
+        model.addAttribute("joueur", joueur);
+        return "joueur/form";     
+        //    return "joueur/formUpdate";
+
     }
-   // Pour valider la modification pour envoyer le form
-    @PostMapping("/joueur/{id}/modifier")
-    public ModelAndView ValidationUpdate(@ModelAttribute Joueur joueur) {
-        joueurService.saveJoueur(joueur);
+
+    // Pour valider la modification pour envoyer le form
+    // @PostMapping("/joueur/{id}/modifier")
+    // public ModelAndView ValidationUpdate(@ModelAttribute Joueur joueur) {
+    // joueurService.saveJoueur(joueur);
+    // return new ModelAndView("redirect:/joueurs");
+    // }
+    @PostMapping(value = "/joueur/{id}/modifier")
+    public ModelAndView ValidationUpdate(@PathVariable("id") Long id, @ModelAttribute Joueur joueur) {
+        joueur.setId(id);
+        joueurService.updateJoueur(id,joueur);
         return new ModelAndView("redirect:/joueurs");
     }
 

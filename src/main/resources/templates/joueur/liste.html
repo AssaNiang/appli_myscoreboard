@@ -1,0 +1,36 @@
+<th:block th:include="_communs/header.html"></th:block>
+<h1 class="alert alert-primary text-center">Page Joueur</h1>
+
+<h2 class="d-flex justify-content-bet">Liste des joueurs</h2>
+<!-- a.btn.btn-primary>i.fa.fa-plus -->
+<a href="/joueur/ajouter" class="btn btn-primary"><i class="fa fa-plus"></i></a>
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th><i class="fa fa-cogs"></i></th>
+            <th>ID</th>
+            <th>Pseudo</th>
+            <th>E-mail</th>
+            <th>nb de partie</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:if="${joueurs.empty}">
+            <td colspan="3">Aucun joueur en base de données</td>
+        </tr>
+        <!-- un joueur qui se trouve dans la variable${joueurs} -->
+        <tr th:each="joueur: ${joueurs}">
+            <td>
+                <!-- @ parce qu'on ne peut pas mettre {id}qui est lui variable pour pallier cela il faut mettre le @ -->
+                <a th:href="@{/joueur/{id}/fiche(id=${joueur.id})}"><i class="fa fa-file"></i></a>
+                <a th:href="@{/joueur/{id}/supprimer(id=${joueur.id})}"><i class="fa fa-trash text-danger"></i></a>
+                <a th:href="@{/joueur/{id}/modifier(id=${joueur.id})}"><i class="fa fa-spinner" ></i></a>
+            </td>
+            <td><span th:text="${joueur.id}"> Identifiant </span></td>
+            <td><span th:text="${joueur.nickname}"> Pseudo </span></td>
+            <td><span th:text="${joueur.email}">E-mail</span></td>
+            <td th:text="${joueur.contests}"></td>
+        </tr>
+    </tbody>
+</table>    
+<th:block th:include="_communs/footer.html"></th:block>

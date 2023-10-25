@@ -1,0 +1,36 @@
+<th:block th:include="_communs/header.html"></th:block>
+<h1 class="alert alert-primary text-center">Parties</h1>
+
+<h2 class="d-flex justify-content-bet">Liste des parties</h2>
+<!-- a.btn.btn-primary>i.fa.fa-plus -->
+<a href="/partie/ajouter" class="btn btn-primary"><i class="fa fa-plus"></i></a>
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th><i class="fa fa-cogs"></i></th>
+            <th>id</th>
+            <th>Date</th>
+            <th>Jeu</th>
+            <th>Vainqueur</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:if="${parties.empty}">
+            <td colspan="4">Aucune partie en base de données</td>
+        </tr>
+        <!-- un partie qui se trouve dans la variable${parties} dans le model.addAttribute dans partieContoller-->
+        <tr th:each="partie: ${parties}">
+            <td>
+                <!-- @ parce qu'on ne peut pas mettre {id}qui est lui variable pour pallier cela il faut mettre le @ -->
+                <a th:href="@{/partie/{id}/fiche(id=${partie.id})}"><i class="fa fa-file"></i></a>
+                <a th:href="@{/partie/{id}/supprimer(id=${partie.id})}"><i class="fa fa-trash text-danger"></i></a>
+                <a th:href="@{/partie/{id}/modifier(id=${partie.id})}"><i class="fa fa-spinner" ></i></a>
+            </td>
+            <td><span th:text="${partie.id}"> Identifiant </span></td>
+            <td><span th:text="${partie.startDate}"> Date</span></td>
+            <td><span th:text="${partie.game}">Jeu</span></td>
+            <td ><span th:text="${partie.winner}"></span></td>
+        </tr>
+    </tbody>
+</table>    
+<th:block th:include="_communs/footer.html"></th:block>

@@ -1,28 +1,27 @@
 <th:block th:include="_communs/header.html"></th:block>
-<body class="container">
     <h1 class="alert alert-primary text-center" ></h1>
 
-    <h2>Confirmation  de la suppression  </h2>
+    <h2>Confirmation  de la suppression de la partie </h2>
 
-      <!-- Affichier les info du jeu -->
+      <!-- Affichier les info du joueur -->
+
       <ul class="list-group">
         <li class="list-group-item d-flex">
             <div class="col">Identifiant</div>
-            <div class="col" th:text="${jeu.id}"></div>
+            <div class="col" th:text="${partie.id}"></div>
         </li>
         <li class="list-group-item d-flex">
-            <div class="col">Titre</div>
-            <div class="col" th:text="${jeu.title}"></div>
+            <div class="col">Date du jeu</div>
+            <div class="col" th:text="${partie.startDate}"></div>
         </li>
         <li class="list-group-item d-flex">
-            <div class="col">max</div>
-            <div class="col" th:text="${jeu.maxPlayers}"></div>
+            <div class="col">Jeu</div>
+            <div class="col" th:text="${partie.game}"></div>
         </li>
         <li class="list-group-item d-flex">
-            <div class="col">Participation min</div>
-            <div class="col" th:text="${jeu.minPlayers}"></div>
+            <div class="col">Vainqueur</div>
+            <div class="col" th:text="${partie.winner}"></div>
         </li>
-      
       </ul>
       <form method="post" >
         
@@ -32,7 +31,4 @@
       
       </form>
 
-      
-</body>
-
-</html>
+      <th:block th:include="_communs/footer.html"></th:block>

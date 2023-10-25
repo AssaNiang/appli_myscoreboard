@@ -26,5 +26,9 @@ public class JoueurService {
     public Boolean deleteJoueur(Long id){
         return joueurRepository.deleteJoueur(id);
     }
+    public Joueur updateJoueur( Long id, Joueur joueur ){
+        return joueurRepository.updateJoueur(id,joueur);
+
+    }
     
 }

@@ -26,4 +26,7 @@ public class JeuService {
     public Boolean deleteJeu(Long id){
         return jeuRepository.deleteJeu(id);
     }
+    public Iterable<Jeu> searchJeu(String word){
+        return jeuRepository.searchJeu(word);
+    }
 }
